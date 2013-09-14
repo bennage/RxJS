@@ -1,4 +1,4 @@
-    // Refernces
+    // References
     var Observable = Rx.Observable,
         observableProto = Observable.prototype,
         AnonymousObservable = Rx.Internals.AnonymousObservable,
