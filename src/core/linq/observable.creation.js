@@ -1,11 +1,42 @@
-    /**
-     *  Creates an observable sequence from a specified subscribe method implementation.
-     *  
-     * @example
-     *  1 - res = Rx.Observable.create(function (observer) { return function () { } );
-     *  
-     * @param {Function} subscribe Implementation of the resulting observable sequence's subscribe method, returning a function that will be wrapped in a Disposable.
-     * @returns {Observable} The observable sequence with the specified implementation for the Subscribe method.
+    /*@
+    Creates an observable sequence from a specified subscribe method implementation.
+
+    #### Arguments
+    1. `subscribe` *(Function)*: Implementation of the resulting observable sequence's subscribe method, optionally returning a function that will be wrapped in a disposable object.
+
+    #### Returns
+    *(Observable)*: The observable sequence with the specified implementation for the subscribe method.
+
+    #### Example
+    ```js
+    var source = Rx.Observable.create(function (observer) {
+        observer.onNext(42);
+        observer.onCompleted();
+
+        // Note that this is optional, you do not have to return this if you require no cleanup
+        return function () {
+            console.log('disposed');
+        };
+    });
+
+    var subscription = source.subscribe(
+        function (x) {
+            console.log('Next: ' + x);
+        },
+        function (err) {
+            console.log('Error: ' + err);   
+        },
+        function () {
+            console.log('Completed');   
+        });
+
+    // => Next: 42
+    // => Completed
+
+    subscription.dispose();
+
+    // => disposed
+    ```
      */
     Observable.create = function (subscribe) {
         return new AnonymousObservable(function (o) {
@@ -13,15 +44,45 @@
         });
     };
 
-    /**
-     *  Creates an observable sequence from a specified subscribe method implementation.
-     *  
-     * @example
-     *  1 - res = Rx.Observable.create(function (observer) { return Rx.Disposable.empty; } );        
-     * @static
-     * @memberOf Observable
-     * @param {Function} subscribe Implementation of the resulting observable sequence's subscribe method.
-     * @returns {Observable} The observable sequence with the specified implementation for the Subscribe method.
+    /*@
+    Creates an observable sequence from a specified Subscribe method implementation.
+
+    #### Arguments
+    1. `subscribe` *(Function)*: Implementation of the resulting observable sequence's subscribe method.
+
+    #### Returns
+    *(Observable)*: The observable sequence with the specified implementation for the subscribe method.
+
+    #### Example
+    ```js
+    var source = Rx.Observable.createWithDisposable(function (observer) {
+        observer.onNext(42);
+        observer.onCompleted();
+
+        return Rx.Disposable.create(function () {
+            // Any cleanup that is required
+            console.log('disposed');
+        });
+    });
+
+    var subscription = source.subscribe(
+        function (x) {
+            console.log('Next: ' + x);
+        },
+        function (err) {
+            console.log('Error: ' + err);   
+        },
+        function () {
+            console.log('Completed');   
+        });
+
+    // => Next: 42
+    // => Completed
+
+    subscription.dispose();
+
+    // => disposed
+    ```
      */
     Observable.createWithDisposable = function (subscribe) {
         return new AnonymousObservable(subscribe);
