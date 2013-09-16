@@ -1,13 +1,13 @@
     /*@
     Creates an observable sequence from a specified subscribe method implementation.
 
-    #### Arguments
+    @Arguments
     1. `subscribe` *(Function)*: Implementation of the resulting observable sequence's subscribe method, optionally returning a function that will be wrapped in a disposable object.
 
-    #### Returns
+    @Returns
     *(Observable)*: The observable sequence with the specified implementation for the subscribe method.
 
-    #### Example
+    @Example
     ```js
     var source = Rx.Observable.create(function (observer) {
         observer.onNext(42);
@@ -47,13 +47,13 @@
     /*@
     Creates an observable sequence from a specified Subscribe method implementation.
 
-    #### Arguments
+    @Arguments
     1. `subscribe` *(Function)*: Implementation of the resulting observable sequence's subscribe method.
 
-    #### Returns
+    @Returns
     *(Observable)*: The observable sequence with the specified implementation for the subscribe method.
 
-    #### Example
+    @Example
     ```js
     var source = Rx.Observable.createWithDisposable(function (observer) {
         observer.onNext(42);

@@ -21,7 +21,7 @@
     }
 }(this, function (global, exp, Rx, undefined) {
     
-    // Refernces
+    // References
     var Observable = Rx.Observable,
         observableProto = Observable.prototype,
         AnonymousObservable = Rx.Internals.AnonymousObservable,
